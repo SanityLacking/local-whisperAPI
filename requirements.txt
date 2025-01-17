@@ -2,3 +2,4 @@ fastapi
 faster_whisper
 python-multipart
 uvicorn
+starlette

@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, Form, HTTPException, Header, Depends
-from typing import Optional
+from typing import Optional, Annotated
 from faster_whisper import WhisperModel
 import os
 import uvicorn
@@ -22,9 +22,9 @@ def verify_api_key(Authorization: str = Header(...)):
 @app.post("/v1/audio/transcriptions", dependencies=[Depends(verify_api_key)])
 async def transcribe_audio(
     file: UploadFile,
-    model: str = "base",
-    language: Optional[str] = "en",
-    temperature: Optional[float] = 0.0
+    model: Annotated[str, Form()] = "base",
+    language: Annotated[Optional[str], Form()] = "en",
+    temperature: Annotated[Optional[float], Form()] = 0.0
 ):
     """
     Emulates the OpenAI Whisper transcription endpoint.
